@@ -1,0 +1,169 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Family {
+  id        Int      @id @default(autoincrement())
+  name      String
+  createdAt DateTime @default(now())
+  users     User[]
+}
+
+model User {
+  id             Int             @id @default(autoincrement())
+  username       String          @unique
+  password       String
+  role           String          @default("user")
+  familyId       Int?
+  family         Family?         @relation(fields: [familyId], references: [id])
+  createdAt      DateTime        @default(now())
+  expenses       Expense[]
+  energyReadings EnergyReading[]
+  recipes        Recipe[]
+  notifications  Notification[]
+  fixedCosts     FixedCost[]
+  shoppingLists  ShoppingList[]
+}
+
+model Expense {
+  id           Int      @id @default(autoincrement())
+  userId       Int
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  amount       Float
+  category     String
+  description  String?
+  storeName    String?
+  date         DateTime @default(now())
+  receiptImage String?
+  items        String?
+  createdAt    DateTime @default(now())
+}
+
+model Budget {
+  id       Int    @id @default(autoincrement())
+  category String
+  amount   Float
+  month    Int
+  year     Int
+
+  @@unique([category, month, year])
+}
+
+model CategoryMapping {
+  id        Int      @id @default(autoincrement())
+  keyword   String   @unique
+  category  String
+  count     Int      @default(1)
+  updatedAt DateTime @updatedAt
+}
+
+model Recipe {
+  id                  Int                  @id @default(autoincrement())
+  name                String
+  category            String
+  ingredients         String
+  steps               String
+  image               String?
+  sourceUrl           String?
+  createdAt           DateTime             @default(now())
+  userId              Int
+  user                User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  shoppingListRecipes ShoppingListRecipe[]
+}
+
+model ShoppingList {
+  id        Int                  @id @default(autoincrement())
+  userId    Int
+  user      User                 @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name      String
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+  items     ShoppingListItem[]
+  recipes   ShoppingListRecipe[]
+}
+
+model ShoppingListItem {
+  id             Int          @id @default(autoincrement())
+  shoppingListId Int
+  shoppingList   ShoppingList @relation(fields: [shoppingListId], references: [id], onDelete: Cascade)
+  name           String
+  quantity       String?
+  unit           String?
+  checked        Boolean      @default(false)
+  category       String?
+  sortOrder      Int          @default(0)
+  createdAt      DateTime     @default(now())
+}
+
+model ShoppingListRecipe {
+  id             Int          @id @default(autoincrement())
+  shoppingListId Int
+  shoppingList   ShoppingList @relation(fields: [shoppingListId], references: [id], onDelete: Cascade)
+  recipeId       Int
+  recipe         Recipe       @relation(fields: [recipeId], references: [id], onDelete: Cascade)
+}
+
+model EnergyReading {
+  id        Int      @id @default(autoincrement())
+  type      String
+  value     Float
+  date      DateTime @default(now())
+  image     String?
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model EnergyPricing {
+  id           Int      @id @default(autoincrement())
+  type         String   @unique
+  pricePerUnit Float
+  currency     String   @default("EUR")
+  updatedAt    DateTime @updatedAt
+}
+
+model Notification {
+  id        Int      @id @default(autoincrement())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  type      String
+  title     String
+  message   String
+  read      Boolean  @default(false)
+  data      String?
+  createdAt DateTime @default(now())
+}
+
+model FixedCost {
+  id              Int                @id @default(autoincrement())
+  userId          Int
+  user            User               @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name            String
+  amount          Float
+  category        String
+  dueDay          Int?
+  nextDueDate     DateTime
+  recurrence      String
+  customDays      Int?
+  notes           String?
+  isActive        Boolean            @default(true)
+  remindDaysBefore Int               @default(3)
+  createdAt       DateTime           @default(now())
+  payments        FixedCostPayment[]
+}
+
+model FixedCostPayment {
+  id          Int       @id @default(autoincrement())
+  fixedCostId Int
+  fixedCost   FixedCost @relation(fields: [fixedCostId], references: [id], onDelete: Cascade)
+  paidAt      DateTime  @default(now())
+  amount      Float
+  dueDate     DateTime
+  expenseId   Int?
+  notes       String?
+  createdAt   DateTime  @default(now())
+}
