@@ -6,7 +6,7 @@ const SECRET = new TextEncoder().encode(
   process.env.JWT_SECRET || 'family-dashboard-super-tajny-kluc-2024'
 )
 
-const PUBLIC_PATHS = ['/prihlasenie', '/api/auth/prihlasenie']
+const PUBLIC_PATHS = ['/', '/prihlasenie', '/api/auth/prihlasenie']
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
