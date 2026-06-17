@@ -25,7 +25,7 @@ const pillars = [
   {
     number: '03',
     title: 'Prémiové materiály',
-    body: 'Používame len overené materiály: masív, dýha, MDF, HPL laminát. Povrchové úpravy s odolnosťou na desaťročia.',
+    body: 'MDF, HDF, HPL laminát, akrylát — materiály presne frézované na milimetre. Žiadne praskanie, žiadne krútenie, dokonalý výsledok.',
     icon: (
       <svg viewBox="0 0 40 40" fill="none" className="w-8 h-8" stroke="currentColor" strokeWidth="1.2">
         <path d="M8 32L14 14L20 24L26 10L32 32H8Z" />
@@ -86,21 +86,22 @@ export default function WhyUs() {
               <span className="section-label">Prečo Niko Nábytok</span>
             </div>
             <h2 className="heading-lg mb-6">
-              Remeslo, ktoré sa
+              Výroba, kde každý
               <br />
               <em className="not-italic italic text-gold-600">
-                nezabúda robiť poriadne
+                milimeter hrá rolu
               </em>
             </h2>
             <p className="body-text mb-6 leading-loose">
               Nie sme veľkoskladový eshop s katalógom tisícok kusov. Sme
-              výrobca s dielňou, zamestnancami a rokmi skúseností. Každý
-              projekt berie vážne, pretože váš domov si zaslúži viac než
-              generický kus z polička.
+              výrobca s dielňou, CNC strojmi a rokmi skúseností. Pracujeme
+              s MDF, HDF a modernými povrchovými úpravami — pretože dnešný
+              kvalitný nábytok nevyžaduje masív, ale presnosť.
             </p>
             <p className="body-text mb-10 leading-loose">
               Spolupracujeme s architektmi, dizajnérmi aj priamo so zákazníkmi.
-              Vaša predstava + naše remeslo = nábytok, ktorý tu bude desaťročia.
+              Vaša predstava + naša výroba = nábytok presne na váš priestor,
+              ktorý tu bude desaťročia.
             </p>
             <a href="#kontakt" className="btn-primary">
               Začnite konzultáciu
