@@ -218,7 +218,7 @@ export default function FinanciePage() {
                         />
                         <div>
                           <p className="text-sm font-medium text-gray-900">
-                            {expense.storeName || expense.description || getCategoryLabel(expense.category)}
+                            {(expense as any).storeName || expense.description || getCategoryLabel(expense.category)}
                           </p>
                           <div className="flex items-center gap-2 text-xs text-gray-400 flex-wrap">
                             <span className="px-1.5 py-0.5 rounded-full text-[10px] font-medium"
@@ -227,7 +227,7 @@ export default function FinanciePage() {
                               {getCategoryLabel(expense.category)}
                             </span>
                             <span>{new Date(expense.date).toLocaleDateString('sk-SK')}</span>
-                            {expense.description && expense.storeName && <span>• {expense.description}</span>}
+                            {expense.description && (expense as any).storeName && <span>• {expense.description}</span>}
                             {expense.user?.username && <span>• {expense.user.username}</span>}
                           </div>
                           {expense.items && (

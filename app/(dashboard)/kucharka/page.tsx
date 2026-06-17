@@ -107,7 +107,7 @@ export default function KucharkaPage() {
     name: string; category: string; ingredients: string; steps: string; image: string; sourceUrl: string
   }) {
     setShowImportUrl(false)
-    setImportInitial({ name: data.name, category: data.category, ingredients: data.ingredients, steps: data.steps, image: data.image })
+    setImportInitial({ name: data.name, category: data.category, ingredients: data.ingredients, steps: Array.isArray(data.steps) ? data.steps : (data.steps as unknown as string).split('\n'), image: data.image })
     setShowAddModal(true)
   }
 

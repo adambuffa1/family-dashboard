@@ -56,7 +56,7 @@ export async function POST(request: NextRequest) {
     },
     include: {
       user: { select: { username: true } },
-      payments: [],
+      payments: true,
     },
   })
 
